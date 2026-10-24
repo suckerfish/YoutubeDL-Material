@@ -23,6 +23,9 @@ const defaultFormat = winston.format.printf(({ level, message, label, timestamp 
 
 let debugMode = process.env.YTDL_MODE === 'debug';
 
+// YouTube blocks CI runner IPs as bots, and CI has no TwitchDownloaderCLI
+const it_network = process.env.SKIP_NETWORK_TESTS ? it.skip : it;
+
 const logger = winston.createLogger({
     level: 'info',
     format: winston.format.combine(winston.format.timestamp(), defaultFormat),
@@ -482,13 +485,13 @@ describe('Downloader', function() {
         config_api.setConfigItem('ytdl_allow_playlist_categorization', true);
     });
 
-    it('Get file info', async function() {
+    it_network('Get file info', async function() {
         this.timeout(300000);
         const info = await downloader_api.getVideoInfoByURL(url);
         assert(!!info && info.length > 0);
     });
 
-    it('Download file', async function() {
+    it_network('Download file', async function() {
         this.timeout(300000);
         await downloader_api.setupDownloads();
         const args = await downloader_api.generateArgs(url, 'video', options, null, true);
@@ -505,7 +508,7 @@ describe('Downloader', function() {
         assert(success);
     });
 
-    it('Downloader - categorize', async function() {
+    it_network('Downloader - categorize', async function() {
         this.timeout(300000);
         await createCategory(url);
         // collect info
@@ -515,7 +518,7 @@ describe('Downloader', function() {
         assert(returned_download['category']['name'] === 'test_category');
     });
 
-    it('Downloader - categorize playlist', async function() {
+    it_network('Downloader - categorize playlist', async function() {
         this.timeout(300000);
         await createCategory(playlist_url);
         // collect info
@@ -604,7 +607,7 @@ describe('Downloader', function() {
     describe('Twitch', async function () {
         const twitch_api = require('../twitch');
         const example_vod = '1790315420';
-        it('Download VOD chat', async function() {
+        it_network('Download VOD chat', async function() {
             this.timeout(300000);
             if (!fs.existsSync('TwitchDownloaderCLI')) {
                 try {

@@ -37,4 +37,6 @@ jobs:
         working-directory: ./backend
       - name: Run All Node.js Tests
         run: npm run test
+        env:
+          SKIP_NETWORK_TESTS: 'true'
         working-directory: ./backend
