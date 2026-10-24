@@ -15,6 +15,7 @@ const db_api = require('./db');
 const files_api = require('./files');
 const notifications_api = require('./notifications');
 const archive_api = require('./archive');
+const CONSTS = require('./consts');
 
 const mutex = new Mutex();
 let should_check_downloads = true;
@@ -436,7 +437,7 @@ exports.generateArgs = async (url, type, options, user_uid = null, simulated = f
     const videoFolderPath = config_api.getConfigItem('ytdl_video_folder_path');
     const usersFolderPath = config_api.getConfigItem('ytdl_users_base_path');
 
-    const videopath = config_api.getConfigItem('ytdl_default_file_output') ? config_api.getConfigItem('ytdl_default_file_output') : '%(title)s';
+    const videopath = config_api.getConfigItem('ytdl_default_file_output') ? config_api.getConfigItem('ytdl_default_file_output') : CONSTS.DEFAULT_FILE_OUTPUT;
     const globalArgs = config_api.getConfigItem('ytdl_custom_args');
     const useCookies = config_api.getConfigItem('ytdl_use_cookies');
     const is_audio = type === 'audio';

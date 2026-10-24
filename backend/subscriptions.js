@@ -344,7 +344,7 @@ exports.generateOptionsForSubscriptionDownload = (sub, user_uid) => {
     else
         basePath = config_api.getConfigItem('ytdl_subscriptions_base_path');
 
-    let default_output = config_api.getConfigItem('ytdl_default_file_output') ? config_api.getConfigItem('ytdl_default_file_output') : '%(title)s';
+    let default_output = config_api.getConfigItem('ytdl_default_file_output') ? config_api.getConfigItem('ytdl_default_file_output') : CONSTS.DEFAULT_FILE_OUTPUT;
 
     const base_download_options = {
         maxHeight: sub.maxQuality && sub.maxQuality !== 'best' ? sub.maxQuality : null,
@@ -367,7 +367,7 @@ async function generateArgsForSubscription(sub, user_uid, redownload = false, de
 
     let appendedBasePath = getAppendedBasePath(sub, basePath);
 
-    const file_output = config_api.getConfigItem('ytdl_default_file_output') ? config_api.getConfigItem('ytdl_default_file_output') : '%(title)s';
+    const file_output = config_api.getConfigItem('ytdl_default_file_output') ? config_api.getConfigItem('ytdl_default_file_output') : CONSTS.DEFAULT_FILE_OUTPUT;
 
     let fullOutput = `"${appendedBasePath}/${file_output}.%(ext)s"`;
     if (desired_path) {
