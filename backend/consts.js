@@ -360,3 +360,7 @@ exports.YTDL_ARGS_WITH_VALUES = new Set(YTDL_ARGS_WITH_VALUES);
 exports.ICON_URL = 'https://i.imgur.com/IKOlr0N.png';
 
 exports.CURRENT_VERSION = 'v4.3.2';
+
+// Linux caps filenames at 255 bytes; captions used as titles (Facebook, Instagram) exceed it.
+// Truncate by bytes, not characters, so emoji and non-Latin titles also fit.
+exports.DEFAULT_FILE_OUTPUT = '%(title).150B';
